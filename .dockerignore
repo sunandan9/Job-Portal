@@ -1,0 +1,8 @@
+target
+server/target
+client/node_modules
+client/dist
+*.log
+.git
+.gitignore
+.DS_Store
