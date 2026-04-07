@@ -15,25 +15,31 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(u => u.email === email && u.password === password);
+        const res = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
 
-        if (!user) throw new Error('Invalid credentials');
-
-        const userData = { id: user.id, name: user.name, email: user.email, role: user.role };
+        if (!res.ok) throw new Error('Invalid credentials');
+        
+        const data = await res.json();
+        const userData = { ...data.user, token: data.token };
         localStorage.setItem('user', JSON.stringify(userData));
         setUser(userData);
     };
 
     const register = async (name, email, password, role) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        if (users.find(u => u.email === email)) throw new Error('User already exists');
+        const res = await fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, role })
+        });
 
-        const newUser = { id: Date.now().toString(), name, email, password, role };
-        users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
+        if (!res.ok) throw new Error('User already exists');
 
-        const userData = { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role };
+        const data = await res.json();
+        const userData = { ...data.user, token: data.token };
         localStorage.setItem('user', JSON.stringify(userData));
         setUser(userData);
     };

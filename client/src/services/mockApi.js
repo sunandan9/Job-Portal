@@ -1,57 +1,75 @@
-const getLocalData = (key) => JSON.parse(localStorage.getItem(key)) || [];
-const setLocalData = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+const API_URL = 'http://localhost:5000/api';
+
+const getHeaders = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': user && user.token ? `Bearer ${user.token}` : ''
+    };
+};
 
 export const mockApi = {
-    // Auth mocking is handled in AuthContext mostly, but we can put helper here
-    getUsers: () => getLocalData('users'),
+    // Users
+    getUsers: async () => {
+        const res = await fetch(`${API_URL}/auth/users`, { headers: getHeaders() });
+        if (!res.ok) throw new Error('Failed to fetch users');
+        return res.json();
+    },
 
     // Jobs
-    getJobs: () => getLocalData('jobs'),
-    createJob: (job) => {
-        const jobs = getLocalData('jobs');
-        const newJob = { ...job, _id: Date.now().toString(), status: 'open', createdAt: new Date() };
-        jobs.push(newJob);
-        setLocalData('jobs', jobs);
-        return newJob;
+    getJobs: async () => {
+        const res = await fetch(`${API_URL}/jobs`, { headers: getHeaders() });
+        if (!res.ok) throw new Error('Failed to fetch jobs');
+        return res.json();
+    },
+    createJob: async (job) => {
+        const res = await fetch(`${API_URL}/jobs`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify(job)
+        });
+        if (!res.ok) throw new Error('Failed to create job');
+        return res.json();
     },
 
     // Applications
-    getApplications: (user) => {
-        const apps = getLocalData('applications');
-        if (user.role === 'student') return apps.filter(a => a.studentId === user.id);
-        if (user.role === 'employer') {
-            const jobs = getLocalData('jobs').filter(j => j.companyId === user.id);
-            const jobIds = jobs.map(j => j._id);
-            console.log('Employer Jobs Found:', jobIds);
-            const userApps = apps.filter(a => jobIds.includes(a.jobId));
-            console.log('Filtered Apps for Employer:', userApps);
-            return userApps;
-        }
-        return apps;
+    getApplications: async (user) => {
+        const res = await fetch(`${API_URL}/applications`, { headers: getHeaders() });
+        if (!res.ok) throw new Error('Failed to fetch applications');
+        return res.json();
     },
-    applyForJob: (app) => {
-        const apps = getLocalData('applications');
-        const newApp = { ...app, _id: Date.now().toString(), status: 'applied', createdAt: new Date() };
-        apps.push(newApp);
-        setLocalData('applications', apps);
-        return newApp;
+    applyForJob: async (app) => {
+        const res = await fetch(`${API_URL}/applications`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify(app)
+        });
+        if (!res.ok) throw new Error('Failed to apply for job');
+        return res.json();
     },
-    updateApplicationStatus: (id, status) => {
-        const apps = getLocalData('applications');
-        const index = apps.findIndex(a => a._id === id);
-        if (index !== -1) {
-            apps[index].status = status;
-            setLocalData('applications', apps);
-        }
+    updateApplicationStatus: async (id, status) => {
+        const res = await fetch(`${API_URL}/applications/${id}/status`, {
+            method: 'PUT',
+            headers: getHeaders(),
+            body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error('Failed to update status');
+        return res;
     },
 
-    // Placements
-    getPlacements: () => getLocalData('placements'),
-    createPlacement: (record) => {
-        const placements = getLocalData('placements');
-        const newRecord = { ...record, _id: Date.now().toString(), createdAt: new Date() };
-        placements.push(newRecord);
-        setLocalData('placements', placements);
-        return newRecord;
+    // Profile
+    getProfile: async () => {
+        const res = await fetch(`${API_URL}/auth/profile`, { headers: getHeaders() });
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        return res.json();
+    },
+    updateProfile: async (userData) => {
+        const res = await fetch(`${API_URL}/auth/profile`, {
+            method: 'PUT',
+            headers: getHeaders(),
+            body: JSON.stringify(userData)
+        });
+        if (!res.ok) throw new Error('Failed to update profile');
+        return res.json();
     }
 };
