@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --secondary: #ec4899;
+  --secondary-gradient: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+  
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-primary: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+  --shadow-primary-hover: 0 15px 35px -5px rgba(37, 99, 235, 0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(239,246,255,1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(248,250,252,1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(241,245,249,1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(239,246,255,1) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.premium-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.kpi-info h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.kpi-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.kpi-card:hover .kpi-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.icon-blue { background: #eff6ff; color: #2563eb; }
+.icon-green { background: #ecfdf5; color: #059669; }
+.icon-purple { background: #f5f3ff; color: #7c3aed; }
+.icon-orange { background: #fff7ed; color: #ea580c; }
+
+.input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 0.875rem;
+  height: 48px;
+  background: #ffffff;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.input-container input {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  padding-left: 0.75rem;
+  font-size: 0.95rem;
+  background: transparent;
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 2rem;
+  padding-bottom: 0px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: var(--primary);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+button.primary {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 0.8rem 1.75rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-primary);
+}
+
+button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary-hover);
+}
+
+button.primary:active {
+  transform: translateY(0);
+}
+
+/* Stunning Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale {
+  animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
